@@ -4,13 +4,13 @@ import java.util.List;
 
 import com.example.demo.model.Systemss;
 
-public class Company {
+public class CompanyDao {
 	
 	private long id;
 	
 	private String companyname;
 	
-	private List<Systemss> System;
+	private List<SytemssDao> System;
 
 	
 	
@@ -30,13 +30,15 @@ public class Company {
 		this.companyname = companyname;
 	}
 
-	public List<Systemss> getSystem() {
+	public List<SytemssDao> getSystem() {
 		return System;
 	}
 
-	public void setSystem(List<Systemss> system) {
+	public void setSystem(List<SytemssDao> system) {
 		System = system;
 	}
+
+	
 
 	
 	
