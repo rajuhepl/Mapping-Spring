@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.Pojo.CompanyDao;
@@ -25,8 +26,8 @@ public class CompanyController {
 	}
 	
 	@GetMapping("ByDto")
-	public List<CompanyDao> display() {
-		return service.print();
+	public List<CompanyDao> display(@RequestParam int pageNo , @RequestParam int pageSize) {
+		return service.print(pageNo, pageSize);
 	}
 	
 	

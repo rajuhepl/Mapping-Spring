@@ -2,14 +2,14 @@ package com.example.demo.service;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.Pojo.CompanyDao;
-
 import com.example.demo.Pojo.SytemssDao;
 import com.example.demo.model.Company;
 import com.example.demo.model.Employees;
@@ -89,8 +89,10 @@ private Company convertToEntity(CompanyDao cDto) {
 		return "Added";
 	}
 	//get
-	public List<CompanyDao> print(){
-		return repo.findAll().stream()
+	public List<CompanyDao> print(int pageNo , int pageSize){
+		  Page<Company> companyPage = repo.findAll(PageRequest.of(pageNo, pageSize));
+		
+		return companyPage.stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
 	}
