@@ -30,6 +30,7 @@ public class User {
 	private Date  loginAt;
 	private Date  createdAt;
 	private Date  updatedAt;
+	
 	public Long getId() {
 		return id;
 	}
@@ -132,6 +133,17 @@ public class User {
 		Date currentDate = new Date();
 		this.updatedAt = currentDate;
 	}
+	public User(String username, String usertype, String password) {
+		super();
+		this.username = username;
+		this.usertype = usertype;
+		this.password = password;
+	}
+	public User() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
 		
 	}
 	

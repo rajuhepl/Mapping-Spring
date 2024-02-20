@@ -50,6 +50,7 @@ public class LoginService {
 		
 		User UserEntity = new  User();
 		UserEntity.setName(signupDto.getName());
+		UserEntity.setUsername(signupDto.getUsername());
 		UserEntity.setEmail(signupDto.getEmail());
 		UserEntity.setGender(signupDto.getGender());
 		UserEntity.setPhoneno(signupDto.getPhoneno());

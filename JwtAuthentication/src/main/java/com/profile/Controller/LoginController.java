@@ -3,6 +3,12 @@ package com.profile.Controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.profile.DTO.AuthResponseDto;
 import com.profile.DTO.LoginRequestDto;
 import com.profile.DTO.SignUpDto;
 import com.profile.DTO.UserInfo;
@@ -26,6 +33,17 @@ public class LoginController {
 	@Autowired
 	private JavaUtils javautils;
 	
+	@Autowired
+	private AuthenticationManager authenticateManager ;
+	
+	
+	/*
+	 * public LoginController(LoginService logservice, JavaUtils javautils,
+	 * AuthenticationManager authenticatemanager) { super(); this.logservice =
+	 * logservice; this.javautils = javautils; this.authenticatemanager =
+	 * authenticatemanager; }
+	 */
+
 	@PostMapping("/signup")
 	public String signup (@RequestBody SignUpDto signupDto) {
 		return logservice.signup(signupDto);
@@ -33,8 +51,13 @@ public class LoginController {
 	}
 
 	@PostMapping("/login")
-	public String login (@RequestBody LoginRequestDto loginDto) {
-		return logservice.login(loginDto);
+	public ResponseEntity<AuthResponseDto> login (@RequestBody LoginRequestDto loginDto) {
+		Authentication auth = new authenticateManager.authenticate(new UsernamePasswordAuthenticationToken(
+                loginDto.getEmail(),
+                loginDto.getPassword()));
+		 SecurityContextHolder.getContext().setAuthentication(auth);
+		String token = javautils.generateJwt(auth);
+		return new ResponseEntity<>(new AuthResponseDto(token),HttpStatus.OK);
 		
 	}
 	@GetMapping("/privateapi")
